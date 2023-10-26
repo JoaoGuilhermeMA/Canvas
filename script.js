@@ -14,25 +14,6 @@ let ctx = canvas.getContext("2d");
 // ctx.fill();
 // ctx.stroke();
 
-// let imagem = new Image();
-// imagem.src = 'NicePng_sprite-sheet-png_2303116.png';
-// let l = 437;
-// let a = 563;
-
-// imagem.onload = function() {
-//     ctx.drawImage(imagem, 0, 0, 300, 300);
-//     ctx.drawImage(imagem, 0, 0, l,a, 300, 300, 100, 100);
-//     ctx.drawImage(imagem, l, 0, l+50,a, 400, 400, 100, 100);
-//     ctx.drawImage(imagem, l*2+50, 0, l,a, 500, 500, 100, 100);
-//     ctx.drawImage(imagem, l*2*2-360, 0, l,a, 600, 600, 100, 100);
-// }
-
-/*
-drawImage(imagem, xOrigem, yOrigem, larguraOrigem,
-alturaOrigem, xDestino, yDestino, larguraDestino,
-alturaDestino): desenha parte da imagem.
- */
-
 // ctx.fillStyle = 'green';
 // ctx.fillRect(50, 50, 25, 25);
 // ctx.save();
@@ -44,3 +25,66 @@ alturaDestino): desenha parte da imagem.
 // ctx.save();
 // ctx.restore();
 
+/*
+drawImage(imagem, xOrigem, yOrigem, larguraOrigem,
+alturaOrigem, xDestino, yDestino, larguraDestino,
+alturaDestino): desenha parte da imagem.
+ */
+
+// ctx.drawImage(imagem, 0, 0, 300, 300);
+// imagem.onload = function () {
+//   ctx.drawImage(imagem, l1, a1, l1, a1 - 10, 300, 300, 100, 100);
+//   ctx.drawImage(imagem, l1, a1, l1 + 50, a1 - 10, 400, 400, 100, 100);
+//   ctx.drawImage(imagem, l1 * 2 + 50, a1, l1, a1 - 10, 500, 500, 100, 100);
+//   ctx.drawImage(imagem, l1 * 2 * 2 - 360, a1, l1, a1 - 10, 600, 600, 100, 100);
+// }
+
+let imagem = new Image();
+imagem.src = 'NicePng_sprite-sheet-png_2303116.png';
+let l1 = 437;
+let a1 = 611;
+let l = 437;
+let a = 563;
+let x = 0;
+let xx = 0;
+let interval = 200;
+function andarPersonagem() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (x < 4) {
+    andarParaBaixo();
+  } else
+    if (x < 8) {
+      andarParaDireita();
+    }
+
+  x = (x + 1) % 4;
+  xx = xx + 20;
+  setTimeout(andarPersonagem, interval);
+}
+
+function andarParaBaixo() {
+  if (x === 0) {
+    ctx.drawImage(imagem, 0, 0, l, a, 0, xx, 100, 100);
+  } else if (x === 1) {
+    ctx.drawImage(imagem, l, 0, l + 50, a, 0, xx, 100, 100);
+  } else if (x === 2) {
+    ctx.drawImage(imagem, l * 2 + 50, 0, l, a, 0, xx, 100, 100);
+  } else if (x === 3) {
+    ctx.drawImage(imagem, l * 2 * 2 - 360, 0, l, a, 0, xx, 100, 100);
+  }
+}
+
+function andarParaDireita() {
+  if (x === 4) {
+    ctx.drawImage(imagem, l1, a1, l1, a1 - 10, xx, 100, 100, 100);
+  } else if (x === 5) {
+    ctx.drawImage(imagem, l1, a1, l1 + 50, a1 - 10, xx, 100, 100, 100);
+  } else if (x === 6) {
+    ctx.drawImage(imagem, l1 * 2 + 50, a1, l1, a1 - 10, xx, 100, 100, 100);
+  } else if (x === 7) {
+    ctx.drawImage(imagem, l1 * 2 * 2 - 360, a1, l1, a1 - 10, xx, 100, 100, 100);
+  }
+
+}
+
+imagem.onload = andarPersonagem;
