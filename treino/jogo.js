@@ -14,6 +14,21 @@ let posX = 0;
 let posY = 0;
 let velocidade = 2;
 let cima = false, baixo = false, direita = false, esquerda = false;
+let posFrame = 0;
+let qntPos = 4;
+
+// function atualizaFrame() {
+//     if (numSprite > 3) {
+//         numSprite = 0;
+//     }
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     if (baixo) {
+//         // posIniX += 1
+//         posY += velocidade;
+//     }
+//     numSprite += 1;
+//     posIniX = larguraSprite * numSprite; 
+// }
 
 
 // imagem.addEventListener('load', ()=>{
@@ -32,9 +47,10 @@ let cima = false, baixo = false, direita = false, esquerda = false;
 //     ctx.drawImage(imagem, posIniX, posIniY, larguraSprite,alturaSprite, posX, posY , 200, 200)
 // },200)
 
+// posIniX = larguraSprite*numSprite
 const desenha = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
     ctx.drawImage(imagem, posIniX, posIniY, larguraSprite, alturaSprite, posX, posY, 200, 200)
 }
 
@@ -68,6 +84,11 @@ const game = () => {
         posY -= velocidade;
     }
     if (baixo) {
+        numSprite +=1;
+        if (numSprite > 3) {
+            numSprite=0;
+        }
+        posIniX = larguraSprite * numSprite; 
         posY += velocidade;
     }
     if (direita) {
