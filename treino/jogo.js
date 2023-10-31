@@ -17,41 +17,10 @@ let cima = false, baixo = false, direita = false, esquerda = false;
 let posFrame = 0;
 let qntPos = 4;
 
-// function atualizaFrame() {
-//     if (numSprite > 3) {
-//         numSprite = 0;
-//     }
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     if (baixo) {
-//         // posIniX += 1
-//         posY += velocidade;
-//     }
-//     numSprite += 1;
-//     posIniX = larguraSprite * numSprite; 
-// }
-
-
-// imagem.addEventListener('load', ()=>{
-//     console.log(larguraSprite + ", " + alturaSprite);
-//     posIniX = larguraSprite*numSprite
-//     ctx.drawImage(imagem, posIniX, posIniY, larguraSprite,alturaSprite, posX, posY , 50, 50)
-// })
-
-// let anima = setInterval(()=> {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     numSprite++;
-//     if (numSprite>3) {
-//         numSprite =0;
-//     }
-//     posIniX=larguraSprite*numSprite;
-//     ctx.drawImage(imagem, posIniX, posIniY, larguraSprite,alturaSprite, posX, posY , 200, 200)
-// },200)
-
-// posIniX = larguraSprite*numSprite
 const desenha = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    ctx.drawImage(imagem, posIniX, posIniY, larguraSprite, alturaSprite, posX, posY, 200, 200)
+    ctx.drawImage(imagem, posIniX, posIniY, larguraSprite, alturaSprite, posX, posY, 50, 50)
 }
 
 
@@ -98,10 +67,9 @@ const game = () => {
         posX -= velocidade;
     }
     desenha();
-    requestAnimationFrame(game);
 }
 
-requestAnimationFrame(game);
+setInterval(game, 90);
 
 
 /*
