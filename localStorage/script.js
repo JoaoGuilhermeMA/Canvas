@@ -14,6 +14,38 @@ let textos = [];
   textos = JSON.parse(textos);
   campo.value = '';
   e.preventDefault();
+  console.log(vetor);
 });
 
-document.location.onload;
+function limparLista() {
+  while (lista.firstChild) {
+    lista.removeChild(lista.firstChild);
+  }
+}
+
+function atualizarLista() {
+  if (localStorage.getItem('itens')) {
+    vetor = JSON.parse(localStorage.getItem('itens'));
+    limparLista();
+    for (let item of vetor) {
+      let novoItem = document.createElement('li');
+      novoItem.textContent = item;
+      lista.appendChild(novoItem);
+    }
+  }
+}
+
+form.addEventListener('submit', function(e) {
+  let novoItem = campo.value;
+  vetor.push(novoItem);
+  localStorage.setItem('itens', JSON.stringify(vetor));
+  limparLista(); 
+  atualizarLista(); 
+  campo.value = '';
+  e.preventDefault();
+  console.log(vetor);
+});
+
+addEventListener('load', atualizarLista);
+
+atualizarLista();
