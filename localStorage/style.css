@@ -8,4 +8,12 @@
 
 li {
   list-style: none;
+  font-size: 20px;
+}
+
+li button {
+  margin: 5px;
+  background-color: #355c7d;
+  padding: 20px;
+  color: white;
 }
