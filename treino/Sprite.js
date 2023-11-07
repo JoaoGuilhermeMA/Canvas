@@ -1,50 +1,71 @@
-export class Sprite {
-    constructor(ctx, imagem, qntdSprite) {
-        this.ctx = ctx;
-        this.imagem = imagem;
-        this.qntdSprite = qntdSprite;
-        this.larguraSprite = imagem.width / qntdSprite;
-        this.alturaSprite = imagem.height / qntdSprite;
-        this.posIniX=0;
-        this.posIniY=0;
-        this.posX=0;
-        this.posY=0;
-        this.numSprite=0;
-        
-        
-        this.imagem.onload = () => {
-            this.baixo(); 
-        };
-    }
+let form = document.getElementById('form');
+let campo = document.getElementById('textoEnvia');
+let lista = document.getElementById('lista');
+let vetor = [];
 
-    desenhar() {
-        this.ctx.drawImage(this.imagem, posIniX, posIniY, larguraSprite, alturaSprite, posX, posY, 50, 50);
-    }
-
-    baixo() {
-        this.posIniX = this.larguraSprite*this.numSprite;
-        this.numSprite +=1;
-        this.ctx.drawImage(this.imagem, this.posIniX, this.posIniY, this.larguraSprite, this.alturaSprite, 0, 0, 50, 50);
-        this.posIniX = this.larguraSprite*this.numSprite;
-        this.numSprite +=1;
-        this.ctx.drawImage(this.imagem, this.posIniX, this.posIniY, this.larguraSprite, this.alturaSprite, 0, 0, 50, 50);
-        this.posIniX = this.larguraSprite*this.numSprite;
-        this.numSprite +=1;
-        this.ctx.drawImage(this.imagem, this.posIniX, this.posIniY, this.larguraSprite, this.alturaSprite, 0, 0, 50, 50);
-        this.posIniX = this.larguraSprite*this.numSprite;
-        this.numSprite +=1;
-        this.ctx.drawImage(this.imagem, this.posIniX, this.posIniY, this.larguraSprite, this.alturaSprite, 0, 0, 50, 50);
-
-        console.log("to aqui");
-    }
+function limparLista() {
+  while (lista.firstChild) {
+    lista.removeChild(lista.firstChild);
+  }
 }
 
-// let numSprite = 0;
-// let posIniX = 0;
-// let larguraSprite = imagem.width / 4;
-// let alturaSprite = imagem.height / 4;
-// let posIniY = 0;
-// let posX = 0;
-// let posY = 0;
-// let velocidade = 2;
-// let cima = false, baixo = false, direita = false, esquerda = false;
+function atualizarLista() {
+  if (localStorage.getItem('itens')) {
+    vetor = JSON.parse(localStorage.getItem('itens'));
+    limparLista();
+    for (let i = 0; i < vetor.length; i++) {
+      adicionarItem(vetor[i], i);
+    }
+  }
+}
+
+function adicionarItem(texto, index) {
+  let novoItem = document.createElement('li');
+  novoItem.textContent = texto;
+
+  let editarButton = document.createElement('button');
+  editarButton.textContent = "Editar";
+  editarButton.addEventListener('click', function () {
+    editarItem(index);
+  });
+
+
+  let excluirButton = document.createElement('button');
+  excluirButton.textContent = "Excluir";
+  excluirButton.addEventListener('click', function () {
+    excluirItem(index);
+  });
+
+  novoItem.appendChild(editarButton);
+  novoItem.appendChild(excluirButton);
+  lista.appendChild(novoItem);
+}
+
+function editarItem(index) {
+  let novoTexto = prompt("Editar o item:", vetor[index]);
+  if (novoTexto !== null) {
+    vetor[index] = novoTexto;
+    localStorage.setItem('itens', JSON.stringify(vetor));
+    atualizarLista();
+  }
+}
+
+function excluirItem(index) {
+  vetor.splice(index, 1);
+  localStorage.setItem('itens', JSON.stringify(vetor));
+  atualizarLista();
+}
+
+form.addEventListener('submit', function(e) {
+  let novoItem = campo.value;
+  vetor.push(novoItem);
+  localStorage.setItem('itens', JSON.stringify(vetor));
+  limparLista();
+  atualizarLista();
+  campo.value = '';
+  e.preventDefault();
+});
+
+window.addEventListener('load', atualizarLista);
+
+atualizarLista();
